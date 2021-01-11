@@ -102,3 +102,12 @@ dist
 
 # TernJS port file
 .tern-port
+
+# WebStorm project files
+.idea
+.idea/*.xml
+*.iml
+out
+gen
+build
+rebel.xml
