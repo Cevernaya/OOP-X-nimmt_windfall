@@ -1,14 +1,17 @@
 class Table {
+    constructor() {
+
+    }
     setTable(num, card) {
         this.board = [[], [], [], []]
         this.board[num].push(card)
     }
 
     setCard(card) {
-        let number = card[0]
+        let number = card.number
         let gap = []
         for (let i = 0; i < 4; i++) {
-            gap.push(number - this.board[i][-1][0])
+            gap.push(number - this.board[i][-1].number)
         }
 
         let num = gap.indexOf(Math.max(...gap))
@@ -17,7 +20,7 @@ class Table {
             if (this.board[num].length > 6) return this.takeCard(card, num)
             else return 0
         } else {
-            num = oninput() // 외부 입력 받기
+            num = onInput() // 외부 입력 받기
             return this.takeCard(card, num)
         }
     }
@@ -25,7 +28,7 @@ class Table {
     takeCard(card, num) {
         let ret = 0
         for (let i = 0; i < this.board[num].length; i++) {
-            ret += this.board[num][i][1]
+            ret += this.board[num][i].point
         }
         this.board[num] = [card]
         return ret

@@ -2,11 +2,13 @@ const Card = require("./Card.js").Card
 
 class Deck{
     constructor () {
+        this.maxNum = 104
         this.list = []
-        for (let a = 0; a < 104; a++){
+        for (let a = 0; a < this.maxNum; a++){
             let card = new Card(a+1)
-            this.list.push([card.number, card.point])
-        } shuffle(this.list)
+            this.list.push(card)
+        }
+        shuffle(this.list)
     }
 
     deckPop(num){
