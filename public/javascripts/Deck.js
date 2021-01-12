@@ -6,11 +6,10 @@ class Deck{
         for (let a = 0; a < 104; a++){
             let card = new Card(a+1)
             this.list.push([card.number, card.point])
-        }
+        } shuffle(this.list)
     }
 
     deckPop(num){
-        shuffle(this.list)
         return this.list.splice(-num)
     }
 }
