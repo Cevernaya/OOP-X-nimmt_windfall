@@ -1,8 +1,51 @@
+@import "./reset.css";
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height: 95vh;
+  display: flex;
+  position: relative;
+  overflow: hidden;
 }
 
-a {
-  color: #00B7FF;
+.score {
+  height: 100%;
+  flex: 1;
+  background-color: aqua;
+}
+
+main {
+  height: 100%;
+  flex: 3;
+  display: grid;
+  grid-template: repeat(4,1fr) / repeat(5,1fr);
+  background-color:blanchedalmond
+}
+
+.mainWrap {
+  height: 90%;
+
+}
+
+.board {
+  height: 100%;
+  flex: 1;
+  background-color: chartreuse;
+}
+
+.hand {
+  width: 90%;
+  height: 30%;
+  position: absolute;
+  left: 50%;
+  bottom: -20%;
+  transform: translateX(-50%);
+  background-color: blueviolet;
+  z-index: 1;
+  transition: .5s ease;
+  display: grid;
+  grid-template: 1fr / repeat(10, 1fr);
+}
+
+.hand:hover {
+  bottom: -5%;
 }
