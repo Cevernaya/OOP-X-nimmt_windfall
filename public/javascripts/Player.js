@@ -5,9 +5,6 @@ class Player{
         this.point = leftPoint
         this.hand = []
     }
-    choiseHand(num){
-        return this.hand.splice(num-1,0)
-    }
 }
 
 exports.Player = Player
