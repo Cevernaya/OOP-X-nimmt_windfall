@@ -1,7 +1,7 @@
 class Card {
     constructor (order) {
         this.number = order
-        this.point = setPoint(order)
+        this.point = this.setPoint(order)
     }
     setPoint(num){
       if (num == 55) return 7
