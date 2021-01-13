@@ -28,3 +28,5 @@ class Manager {
         this.players[playerNum].point -= point
     }
 }
+
+exports.Manager = Manager
