@@ -1,11 +1,12 @@
 class Table {
-    constructor() {
 
-    }
-    setTable(num, card) {
+    constructor(card) {
         this.board = [[], [], [], []]
-        this.board[num].push(card)
+        for (let i = 0; i < this.board.length; i++) {
+            this.board[i].push(card[i])
+        }
     }
+
 
     setCard(card) {
         let number = card.number
@@ -34,3 +35,6 @@ class Table {
         return ret
     }
 }
+
+
+exports.Table = Table
