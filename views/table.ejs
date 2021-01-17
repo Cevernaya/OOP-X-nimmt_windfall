@@ -21,28 +21,28 @@
     <main class="main">
       <div class="mainWrap">
         <div class="boardA board">
-          <div class="boardA0"></div>
+          <div class="boardA0"><%= board[0][0].point %><br><%= board[0][0].number %></div>
           <div class="boardA1"></div>
           <div class="boardA2"></div>
           <div class="boardA3"></div>
           <div class="boardA4"></div>
         </div>
         <div class="boardB board">
-          <div class="boardB0"></div>
+          <div class="boardB0"><%= board[1][0].point %><br><%= board[1][0].number %></div>
           <div class="boardB1"></div>
           <div class="boardB2"></div>
           <div class="boardB3"></div>
           <div class="boardB4"></div>
         </div>
         <div class="boardC board">
-          <div class="boardC0"></div>
+          <div class="boardC0"><%= board[2][0].point %><br><%= board[2][0].number %></div>
           <div class="boardC1"></div>
           <div class="boardC2"></div>
           <div class="boardC3"></div>
           <div class="boardC4"></div>
         </div>
         <div class="boardD board">
-          <div class="boardD0"></div>
+          <div class="boardD0"><%= board[3][0].point %><br><%= board[3][0].number %></div>
           <div class="boardD1"></div>
           <div class="boardD2"></div>
           <div class="boardD3"></div>
@@ -59,7 +59,9 @@
       <div class="tablePlayer6"></div>
     </aside>
     <div class="hand">
-
+      <% for (let i = 0; i < 10; i++){ %>
+      <div><%= playerHand[i].point %><br><%= playerHand[i].number %></div>
+      <% } %>
     </div>
   </body>
 </html>

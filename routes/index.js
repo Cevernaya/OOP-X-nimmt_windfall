@@ -1,11 +1,15 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
+
+const Dealer = require('../public/javascripts/Dealer.js').Dealer
+
+let dealer
 
 let nowPlayerNum = 0
 let ptotal = 0
-pname = new Array(6).fill('')
-ppoint = new Array(6).fill(63)
-phand = new Array(6)
+let phand , pboard
+let pname = new Array(6).fill('')
+let ppoint = new Array(6).fill(66)
 
 
 
@@ -20,6 +24,7 @@ router.route('/join').post(
       if(nowPlayerNum < 6) {
         if(nowPlayerNum == 0){
           ptotal = req.body.totalPlayer
+          dealer = new Dealer(ptotal)
         }
 
         if(!req.session.user){
@@ -39,8 +44,17 @@ router.route('/join').post(
 
 router.route('/table').get(
     function (req, res) {
-        res.render('table', { totalPlayerNum:ptotal, playerName: pname, playerPoint: ppoint, playerHand: phand})
+        phand = dealer.players[req.session.user.id].hand
+        pboard = dealer.table.board
+        res.render('table', { totalPlayerNum:ptotal, playerName: pname, playerPoint: ppoint, playerHand: phand, board: pboard})
     }
 )
+router.route('/table').post(
+    function (req, res) {
 
+
+
+        res.redirect('/table')
+    }
+)
 module.exports = router;
