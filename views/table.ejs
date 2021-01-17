@@ -11,10 +11,10 @@
         <div class="playerName indexName">Name</div>
         <div class="playerScore indexScore">Score</div>
       </div>
-      <% for(let i = 0; i < 2; i++) { %><!--playernum param-->
+      <% for(let i = 0; i < totalPlayerNum; i++) { %>
         <div class="playerScoreBoard">
-          <div class="playerName"></div><!--playerName param-->
-          <div class="playerScore"></div><!--playerScore param-->
+          <div class="playerName"><%= playerName[i] %></div>
+          <div class="playerScore"><%= playerPoint[i] %></div>
         </div>
       <% } %>
     </aside>

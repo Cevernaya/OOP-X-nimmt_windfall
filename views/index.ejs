@@ -9,11 +9,11 @@
     <header>
       <h1>OOP_x_nimmt</h1>
     </header>
-    <span class="currentPlayer">Now Playing : <!--nowplayernum--></span>
+    <span class="currentPlayer">Now Playing : <%= playerNum %></span>
     <form action="/join" method="POST">
-      <!-- <% //if(nowPlayerNum == 0) { %> -->
+      <% if(playerNum == 0) { %>
       <input class="input inputTotalPlayer" type="number" min="2" max="6" value="2" name="totalPlayer"/>
-      <!-- <% //} %> -->
+      <% } %>
       <input class="input inputPlayerName" type="text" name="playerName"/>
       <input class="inputBtn" type="submit"/>
     </form>

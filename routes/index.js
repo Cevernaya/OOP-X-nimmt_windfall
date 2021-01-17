@@ -1,28 +1,34 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+
+let nowPlayerNum = 0
+let ptotal = 0
+pname = new Array(6).fill('')
+ppoint = new Array(6).fill(63)
+phand = new Array(6)
+
+
 
 /* GET home page. */
-let nowPlayerNum = 0
-pname = ['','','','','','']
-
-router.route('/').get(
-    function(req, res) {
-      res.render('index', { playerNum: nowPlayerNum });
+router.route('/').get(function(req, res) {
+      res.render('index', {title: 'X-nimmt', playerNum: nowPlayerNum });
     }
 );
 
 router.route('/join').post(
     function (req, res) {
       if(nowPlayerNum < 6) {
-        if(req.session.user){
+        if(nowPlayerNum == 0){
+          ptotal = req.body.totalPlayer
         }
-        else{
+
+        if(!req.session.user){
           if(nowPlayerNum < 6){
-            pname[nowPlayerNum] = req.body.id
+            pname[nowPlayerNum] = req.body.playerName
           }
           req.session.user = {
             "id": nowPlayerNum,
-            "name": req.body.id
+            "name": req.body.playerName
           }
           nowPlayerNum++
         }
@@ -30,4 +36,11 @@ router.route('/join').post(
       res.redirect('/table')
     }
 )
+
+router.route('/table').get(
+    function (req, res) {
+        res.render('table', { totalPlayerNum:ptotal, playerName: pname, playerPoint: ppoint, playerHand: phand})
+    }
+)
+
 module.exports = router;
