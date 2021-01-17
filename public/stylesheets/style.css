@@ -69,6 +69,14 @@ main {
   align-items: center;
 }
 
+.boardBtn {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
 .cardBtn {
   width: 95px;
   height: 114px;

@@ -20,63 +20,77 @@
     </aside>
     <main class="main">
       <div class="mainWrap">
-        <section class="boardA board">
-          <article class="boardA0">
-            <div class="card">
-              <div class="cardPoint"><%= board[0][0].point %></div>
-              <div class="cardNum"><%= board[0][0].number %></div>
-            </div>
-          </article>
-          <article class="boardA1"></article>
-          <article class="boardA2"></article>
-          <article class="boardA3"></article>
-          <article class="boardA4"></article>
-        </section>
-        <section class="boardB board">
-          <article class="boardB0">
-            <div class="card">
-              <div class="cardPoint"><%= board[1][0].point %></div>
-              <div class="cardNum"><%= board[1][0].number %></div>
-            </div>
-          </article>
-          <article class="boardB1"></article>
-          <article class="boardB2"></article>
-          <article class="boardB3"></article>
-          <article class="boardB4"></article>
-        </section>
-        <section class="boardC board">
-          <article class="boardC0">
-            <div class="card">
-              <div class="cardPoint"><%= board[2][0].point %></div>
-              <div class="cardNum"><%= board[2][0].number %></div>
-            </div>
-          </article>
-          <article class="boardC1"></article>
-          <article class="boardC2"></article>
-          <article class="boardC3"></article>
-          <article class="boardC4"></article>
-        </section>
-        <section class="boardD board">
-          <article class="boardD0">
-            <div class="card">
-              <div class="cardPoint"><%= board[3][0].point %></div>
-              <div class="cardNum"><%= board[3][0].number %></div>
-            </div>
-          </article>
-          <article class="boardD1"></article>
-          <article class="boardD2"></article>
-          <article class="boardD3"></article>
-          <article class="boardD4"></article>
-        </section>
+        <form action="/select" method="POST">
+          <input class="hide" type="number" name="listIndex" value="0"/>
+          <button class="boardBtn" type="submit">
+            <section class="boardA board">
+              <article class="boardA0">
+                <div class="card">
+                  <div class="cardPoint"><%= board[0][0].point %></div>
+                  <div class="cardNum"><%= board[0][0].number %></div>
+                </div>
+              </article>
+              <article class="boardA1"></article>
+              <article class="boardA2"></article>
+              <article class="boardA3"></article>
+              <article class="boardA4"></article>
+            </section>
+          </button>
+        </form>
+        <form action="/select" method="POST">
+          <input class="hide" type="number" name="listIndex" value="1"/>
+          <button class="boardBtn" type="submit">
+            <section class="boardB board">
+              <article class="boardB0">
+                <div class="card">
+                  <div class="cardPoint"><%= board[1][0].point %></div>
+                  <div class="cardNum"><%= board[1][0].number %></div>
+                </div>
+              </article>
+              <article class="boardB1"></article>
+              <article class="boardB2"></article>
+              <article class="boardB3"></article>
+              <article class="boardB4"></article>
+            </section>
+          </button>
+        </form>
+        <form action="/select" method="POST">
+          <input class="hide" type="number" name="listIndex" value="2"/>
+          <button class="boardBtn" type="submit">
+            <section class="boardC board">
+              <article class="boardC0">
+                <div class="card">
+                  <div class="cardPoint"><%= board[2][0].point %></div>
+                  <div class="cardNum"><%= board[2][0].number %></div>
+                </div>
+              </article>
+              <article class="boardC1"></article>
+              <article class="boardC2"></article>
+              <article class="boardC3"></article>
+              <article class="boardC4"></article>
+            </section>
+          </button>
+        </form>
+        <form action="/select" method="POST">
+          <input class="hide" type="number" name="listIndex" value="3"/>
+          <button class="boardBtn" type="submit">
+            <section class="boardD board">
+              <article class="boardD0">
+                <div class="card">
+                  <div class="cardPoint"><%= board[3][0].point %></div>
+                  <div class="cardNum"><%= board[3][0].number %></div>
+                </div>
+              </article>
+              <article class="boardD1"></article>
+              <article class="boardD2"></article>
+              <article class="boardD3"></article>
+              <article class="boardD4"></article>
+            </section>
+          </button>
+        </form>
       </div>
     </main>
     <aside class="table">
-      <div class="tablePlayer1"></div>
-      <div class="tablePlayer2"></div>
-      <div class="tablePlayer3"></div>
-      <div class="tablePlayer4"></div>
-      <div class="tablePlayer5"></div>
-      <div class="tablePlayer6"></div>
     </aside>
     <div class="hand">
       <% for (let i = 0; i < 10; i++){ %>
