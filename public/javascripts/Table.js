@@ -17,11 +17,11 @@ class Table {
         let num = gap.indexOf(Math.min(...gap.filter((value) => value>0)))
         if (Math.max(...gap) > 0) {
             this.board[num].push(...card)
-            if (this.board[num].length > 6) return this.takeCard(card, num)
+            if (this.board[num].length > 6) return this.takeCard(card, li)
             else return 0
         }
         else {
-            return -1
+            this.takeCard(card, num)
         }
     }
 

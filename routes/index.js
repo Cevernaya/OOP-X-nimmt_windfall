@@ -7,7 +7,7 @@ let dealer
 
 let nowPlayerNum = 0
 let ptotal = 0
-let phand
+let phand , pboard
 let pname = new Array(6).fill('')
 let ppoint = new Array(6).fill(66)
 
@@ -45,7 +45,8 @@ router.route('/join').post(
 router.route('/table').get(
     function (req, res) {
         phand = dealer.players[req.session.user.id].hand
-        res.render('table', { totalPlayerNum:ptotal, playerName: pname, playerPoint: ppoint, playerHand: phand})
+        pboard = dealer.table.board
+        res.render('table', { totalPlayerNum:ptotal, playerName: pname, playerPoint: ppoint, playerHand: phand, board: pboard})
     }
 )
 router.route('/table').post(
