@@ -48,38 +48,80 @@ router.route('/table').get(
         phand = dealer.players[req.session.user.id].hand
         pboard = dealer.table.board
 
-        res.render('table', {
-            state: state,
-            selectedCard: selectedCard,
-            totalPlayerNum: ptotal,
-            playerName: pname,
-            playerPoint: ppoint,
-            playerHand: phand,
-            board: pboard
-        })
+        if (state) {
+            console.log(state)
+
+            if (selectedCard.length == ptotal) {
+                state = false
+            }
+            res.render('table', {
+                state: state,
+                selectedCard: selectedCard,
+                totalPlayerNum: ptotal,
+                playerName: pname,
+                playerPoint: ppoint,
+                playerHand: phand,
+                board: pboard
+            })
+        }
+        else {
+            console.log(state)
+            selectedCard = selectedCard.sort(i => i[1].number).reverse()
+            for (var i = 0; i < selectedCard.length; i++) {
+                let chose = selectedCard.pop()
+                let stt = dealer.playerChooseCard(chose[0],chose[1])
+                if (stt[0]) {
+                    let boardNum = takeList(chose[0])
+                    dealer.playerChooseLine(chose[0], stt[1], boardNum)
+                }
+            }
+            state = true
+            res.render('table', {
+                state: state,
+                selectedCard: selectedCard,
+                totalPlayerNum: ptotal,
+                playerName: pname,
+                playerPoint: ppoint,
+                playerHand: phand,
+                board: pboard
+            })
+        }
     }
 )
-router.route('/table').post(
+
+
+router.route('/choice').post(
     function (req, res) {
-        let card = req.body.selectedCard
+        let cardIndex = req.body.selectedCardNum
         let choose = [true]
-        selectedCard.forEach ((item, index, arr) => {
-            if (item[0] == req.session.user.id){ choose = [false, index] }
+        selectedCard.forEach((item, index, arr) => {
+            if (item[0] == req.session.user.id) {
+                choose = [false, index]
+            }
         })
-        if (choose[0]){ selectedCard.push([req.session.user.id, card]) }
-        else { selectedCard[choose[1]] = [req.session.user.id, card] }
-
-        if (selectedCard.length == ptotal-1){ state = false}
-
-        res.render('choose', {
-            state: state,
-            selectedCard: selectedCard,
-            totalPlayerNum: ptotal,
-            playerName: pname,
-            playerPoint: ppoint,
-            playerHand: phand,
-            board: pboard
-        })
+        if (choose[0]) {
+            selectedCard.push([req.session.user.id, cardIndex, dealer.players[req.session.user.id].hand[cardIndex]])
+        } else {
+            selectedCard[choose[1]] = [req.session.user.id, cardIndex, dealer.players[req.session.user.id].hand[cardIndex]]
+        }
+        res.redirect('/table')
     }
 )
 module.exports = router;
+
+function takeList(playerNum){
+    let ret =''
+    while (true) {
+        router.route('/select').post(
+            function (req, res) {
+                ret = req.body.listIndex
+            }
+        )
+        if (playerNum == req.session.user.id && !ret){
+            break
+        }
+        res.redirect('/table')
+    }
+    return ret
+    res.redirect('/table')
+}

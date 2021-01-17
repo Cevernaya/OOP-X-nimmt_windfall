@@ -18,15 +18,16 @@ class Dealer {
         }
     }
 
-    playerChoose(playerNum, cardNum){
+    playerChooseCard(playerNum, cardNum){
         let card = this.players[playerNum].hand.splice(cardNum,1)
-        let point = this.table.setCard(card)
-        if (point < 0){
-            let num = 3  ///////////////외부입력
-            point = this.table.takeCard(card, num)
-        }
+        return [this.table.setCard(card), card]
+    }
+
+    playerChooseLine(playerNum, card, boardNum){
+        let point = this.table.setCard(card, boardNum)
         this.players[playerNum].point -= point
     }
+
 }
 
 exports.Dealer = Dealer
