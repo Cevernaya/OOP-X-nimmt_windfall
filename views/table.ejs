@@ -59,7 +59,9 @@
       <div class="tablePlayer6"></div>
     </aside>
     <div class="hand">
-
+      <% for (let i = 0; i < 10; i++){ %>
+      <div><%= playerHand[i].point %><br><%= playerHand[i].number %></div>
+      <% } %>
     </div>
   </body>
 </html>

@@ -3,7 +3,7 @@ const Table = require("./Table.js").Table
 const Player = require("./Player.js").Player
 
 
-class Manager {
+class Dealer {
     constructor(totalPlayer) {
         let startBoardCard = 4
         this.deck = new Deck()
@@ -29,4 +29,4 @@ class Manager {
     }
 }
 
-exports.Manager = Manager
+exports.Dealer = Dealer
