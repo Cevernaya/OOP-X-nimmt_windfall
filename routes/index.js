@@ -10,7 +10,8 @@ let ptotal = 0
 let phand , pboard
 let pname = new Array(6).fill('')
 let ppoint = new Array(6).fill(66)
-
+let selectedCard = []
+let state = true //true : pass , false : choose
 
 
 /* GET home page. */
@@ -46,15 +47,39 @@ router.route('/table').get(
     function (req, res) {
         phand = dealer.players[req.session.user.id].hand
         pboard = dealer.table.board
-        res.render('table', { totalPlayerNum:ptotal, playerName: pname, playerPoint: ppoint, playerHand: phand, board: pboard})
+
+        res.render('table', {
+            state: state,
+            selectedCard: selectedCard,
+            totalPlayerNum: ptotal,
+            playerName: pname,
+            playerPoint: ppoint,
+            playerHand: phand,
+            board: pboard
+        })
     }
 )
 router.route('/table').post(
     function (req, res) {
+        let card = req.body.selectedCard
+        let choose = [true]
+        selectedCard.forEach ((item, index, arr) => {
+            if (item[0] == req.session.user.id){ choose = [false, index] }
+        })
+        if (choose[0]){ selectedCard.push([req.session.user.id, card]) }
+        else { selectedCard[choose[1]] = [req.session.user.id, card] }
 
+        if (selectedCard.length == ptotal-1){ state = false}
 
-
-        res.redirect('/table')
+        res.render('choose', {
+            state: state,
+            selectedCard: selectedCard,
+            totalPlayerNum: ptotal,
+            playerName: pname,
+            playerPoint: ppoint,
+            playerHand: phand,
+            board: pboard
+        })
     }
 )
 module.exports = router;
