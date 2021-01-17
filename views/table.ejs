@@ -80,10 +80,15 @@
     </aside>
     <div class="hand">
       <% for (let i = 0; i < 10; i++){ %>
-      <div class="card">
-        <div class="cardPoint"><%= playerHand[i].point %></div>
-        <div class="cardNum"><%= playerHand[i].number %></div>
-      </div>
+      <form action="/choice" method="POST">
+        <input class="hide" type="number" name="seletedCardNum" value="<%= i %>"/>
+        <button class="cardBtn" type="submit">
+          <div class="card">
+            <div class="cardPoint"><%= playerHand[i].point %></div>
+            <div class="cardNum"><%= playerHand[i].number %></div>
+          </div>
+        </button>
+      </form>
       <% } %>
     </div>
   </body>
