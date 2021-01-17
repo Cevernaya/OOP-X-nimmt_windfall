@@ -49,23 +49,11 @@ router.route('/table').get(
         pboard = dealer.table.board
 
         if (state) {
-            console.log(state)
-
             if (selectedCard.length == ptotal) {
                 state = false
             }
-            res.render('table', {
-                state: state,
-                selectedCard: selectedCard,
-                totalPlayerNum: ptotal,
-                playerName: pname,
-                playerPoint: ppoint,
-                playerHand: phand,
-                board: pboard
-            })
         }
         else {
-            console.log(state)
             selectedCard = selectedCard.sort(i => i[1].number).reverse()
             for (var i = 0; i < selectedCard.length; i++) {
                 let chose = selectedCard.pop()
@@ -76,16 +64,16 @@ router.route('/table').get(
                 }
             }
             state = true
-            res.render('table', {
-                state: state,
-                selectedCard: selectedCard,
-                totalPlayerNum: ptotal,
-                playerName: pname,
-                playerPoint: ppoint,
-                playerHand: phand,
-                board: pboard
-            })
         }
+        res.render('table', {
+            state: state,
+            selectedCard: selectedCard,
+            totalPlayerNum: ptotal,
+            playerName: pname,
+            playerPoint: ppoint,
+            playerHand: phand,
+            board: pboard
+        })
     }
 )
 
