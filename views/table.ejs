@@ -103,7 +103,7 @@
     <div class="hand">
       <% for (let i = 0; i < playerHand.length; i++){ %>
       <form class="cardForm" action="/choice" method="POST">
-        <input class="hide" type="number" name="selectedCardNumber" value="<%= i %>"/>
+        <input class="hide" type="text" name="selectedCardNumber" value="<%= i %>"/>
         <button class="cardBtn" type="submit">
           <div class="card">
             <div class="cardPoint"><%= playerHand[i].point %></div>

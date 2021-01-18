@@ -48,13 +48,10 @@ router.route('/table').get(
     function (req, res) {
         phand = dealer.players[req.session.user.id].hand
         pboard = dealer.table.board
-        console.log(state)
         if (state == (ptotal+1)) {
-            console.log(selectedCardNum.length)
-            console.log(selectedCardNum)
             if (selectedCardNum.length == ptotal) {
 
-                selectedCardNum = selectedCardNum.sort(item => dealer.players[item[0]].hand[item[1]].number)
+                selectedCardNum = selectedCardNum.sort(compareNumbers)
                 for (let item of selectedCardNum){
                     selectedCard.push(dealer.players[item[0]].hand[item[1]])
                 }
@@ -62,7 +59,6 @@ router.route('/table').get(
             }
         }
         else {
-            console.log("state not 3333")
             let card = selectedCard[0]
             let chose = selectedCardNum[0]
             if (dealer.playerChooseCard(...chose)){
@@ -95,7 +91,7 @@ router.route('/choice').post(
         console.log(cardIndex)
         let choose = [true]
         selectedCardNum.forEach((item, index, arr) => {
-            if (item[0] == req.session.user.id) {
+            if (item[0] == req.session.user.id){
                 choose = [false, index]
             }
         })
@@ -136,4 +132,8 @@ function delay(gap){
     while((now-then)<gap){
         now=new Date().getTime()
     }
+}
+
+function compareNumbers(a, b) {
+    return dealer.players[a[0]].hand[a[1]].number - dealer.players[b[0]].hand[b[1]].number;
 }
