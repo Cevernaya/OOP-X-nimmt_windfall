@@ -10,7 +10,7 @@
       <h1>OOP_x_nimmt</h1>
     </header>
     <span class="currentPlayer">Now Playing : <%= playerNum %></span>
-    <form action="/join" method="POST">
+    <form class="inputForm" action="/join" method="POST">
       <% if(playerNum == 0) { %>
       <input class="input inputTotalPlayer" type="number" min="2" max="6" value="2" name="totalPlayer"/>
       <% } %>
@@ -18,4 +18,20 @@
       <input class="inputBtn" type="submit"/>
     </form>
   </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script>
+    $(function () {
+      var socket = io()
+      $('.inputBtn').click(function(e) {
+        e.preventDefault()
+        socket.emit('refresh')
+        document.querySelector(".inputForm").submit()
+        return false
+      })
+      socket.on('refresh', function(){
+        location.reload()
+      })
+    })
+  </script>
 </html>
