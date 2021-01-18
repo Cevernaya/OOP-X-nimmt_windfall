@@ -19,8 +19,9 @@ class Dealer {
     }
 
     playerChooseCard(playerNum, cardNum){
+        let cardNumber = this.players[playerNum].hand[cardNum].number
         let card = this.players[playerNum].hand.splice(cardNum,1)
-        return [this.table.setCard(card)]
+        return this.table.setCard(card)
     }
 
     playerChooseLine(playerNum, cardNum, card, boardNum){
