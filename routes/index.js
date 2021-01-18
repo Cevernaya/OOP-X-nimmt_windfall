@@ -7,18 +7,18 @@ let dealer
 
 let nowPlayerNum = 0
 let ptotal = 0
-let phand , pboard
+let phand , pboard ,state
 let pname = new Array(6).fill('')
 let ppoint = new Array(6).fill(66)
+let selectedCardNum = []
 let selectedCard = []
-let state = true //true : pass , false : choose
 
 
 /* GET home page. */
 router.route('/').get(function(req, res) {
       res.render('index', {title: 'X-nimmt', playerNum: nowPlayerNum });
     }
-);
+)
 
 router.route('/join').post(
     function (req, res) {
@@ -26,6 +26,7 @@ router.route('/join').post(
         if(nowPlayerNum == 0){
           ptotal = req.body.totalPlayer
           dealer = new Dealer(ptotal)
+          state = ptotal+1
         }
 
         if(!req.session.user){
@@ -44,27 +45,34 @@ router.route('/join').post(
 )
 
 router.route('/table').get(
-    function (req, res) {
+    async function (req, res) {
         phand = dealer.players[req.session.user.id].hand
         pboard = dealer.table.board
 
-        if (state) {
-            if (selectedCard.length == ptotal) {
-                state = false
+        if (state == ptotal+1) {
+            if (selectedCardNum.length == ptotal) {
+
+                selectedCardNum = selectedCardNum.sort(item => dealer.players[item[0]].hand[item[1]])
+                console.log(selectedCardNum)
+                for (let item of selectedCardNum){
+                    selectedCard.push(dealer.players[item[0]].hand[item[1]])
+                }
+                console.log(selectedCard)
+                state = 1
             }
         }
         else {
-            selectedCard = selectedCard.sort(i => i[1].number).reverse()
-            for (var i = 0; i < selectedCard.length; i++) {
-                let chose = selectedCard.pop()
-                let stt = dealer.playerChooseCard(chose[0],chose[1])
-                if (stt[0]) {
-                    let boardNum = takeList(chose[0])
-                    dealer.playerChooseLine(chose[0], stt[1], boardNum)
-                }
+            let card = selectedCard[0]
+            let chose = selectedCardNum[0]
+            console.log(chose)
+            if (dealer.playerChooseCard(...chose)){
+                delay(10)
+                selectedCard.shift()
+                await function(){selectedCardNum.shift()}
+                state++
             }
-            state = true
         }
+
         res.render('table', {
             state: state,
             selectedCard: selectedCard,
@@ -80,36 +88,51 @@ router.route('/table').get(
 
 router.route('/choice').post(
     function (req, res) {
-        let cardIndex = req.body.selectedCardNum
+
+
+        if (state != ptotal+1) res.redirect('/table')
+
+        let cardIndex = Number(req.body.selectedCardNum)
         let choose = [true]
-        selectedCard.forEach((item, index, arr) => {
+        selectedCardNum.forEach((item, index, arr) => {
             if (item[0] == req.session.user.id) {
                 choose = [false, index]
             }
         })
         if (choose[0]) {
-            selectedCard.push([req.session.user.id, cardIndex, dealer.players[req.session.user.id].hand[cardIndex]])
+            selectedCardNum.push([req.session.user.id, cardIndex])
         } else {
-            selectedCard[choose[1]] = [req.session.user.id, cardIndex, dealer.players[req.session.user.id].hand[cardIndex]]
+            selectedCardNum[choose[1]] = [req.session.user.id, cardIndex]
         }
+        console.log(selectedCardNum)
         res.redirect('/table')
     }
 )
+
+router.route('/select').post(
+    function (req, res) {
+        if(state != req.session.user.id) res.redirect('/table')
+
+
+        let card = selectedCard[0]
+        let chose = selectedCardNum[0]
+        if (dealer.playerChooseCard(...chose)){
+            dealer.playerChooseLine(...chose, card, req.body.listIndex)
+        }
+        selectedCard.shift()
+        selectedCardNum.shift()
+        state++
+    }
+)
+
 module.exports = router;
 
-function takeList(playerNum){
-    let ret =''
-    while (true) {
-        router.route('/select').post(
-            function (req, res) {
-                ret = req.body.listIndex
-            }
-        )
-        if (playerNum == req.session.user.id && !ret){
-            break
-        }
-        res.redirect('/table')
+
+function delay(gap){
+    var then,now
+    then=new Date().getTime()
+    now=then
+    while((now-then)<gap){
+        now=new Date().getTime()
     }
-    return ret
-    res.redirect('/table')
 }

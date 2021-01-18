@@ -91,17 +91,17 @@
       </div>
     </main>
     <aside class="table">
-      <% if (!state){ %>
-        <% for (let i = 0; i < totalPlayerNum; i++) { %>
+      <% if (state != totalPlayerNum+1){ %>
+        <% for (let i = 0; i < totalPlayerNum-state+1; i++) { %>
         <div class="card">
-          <div class="cardPoint"><%= selectedCard[i][2].point %></div>
-          <div class="cardNum"><%= selectedCard[i][2].number %></div>
+          <div class="cardPoint"><%= selectedCard[i].point %></div>
+          <div class="cardNum"><%= selectedCard[i].number %></div>
         </div>
         <% } %>
       <% } %>
     </aside>
     <div class="hand">
-      <% for (let i = 0; i < 10; i++){ %>
+      <% for (let i = 0; i < playerHand.length; i++){ %>
       <form action="/choice" method="POST">
         <input class="hide" type="number" name="selectedCardNum" value="<%= i %>"/>
         <button class="cardBtn" type="submit">
