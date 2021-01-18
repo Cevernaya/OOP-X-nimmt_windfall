@@ -9,20 +9,19 @@ class Table {
     }
 
     setCard(card) {
-        let number = card.number
+        let cardNumber = card[0].number
         let gap = []
-        console.log(this.board)
         for (let i = 0; i < 4; i++) {
-            gap.push(number - this.board[i].slice(-1)[0].number)
+            gap.push(cardNumber - this.board[i].slice(-1)[0].number)
         }
         let num = gap.indexOf(Math.min(...gap.filter((value) => value>0)))
         if (Math.max(...gap) > 0) {
-            this.board[num].push(card)
-            if (this.board[num].length > 6) return true
-            else return false
+            this.board[num].push(card[0])
+            if (this.board[num].length > 6) return false
+            else return true
         }
         else {
-            return true
+            return false //줄 선택
         }
     }
 

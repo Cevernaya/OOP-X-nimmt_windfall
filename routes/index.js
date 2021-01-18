@@ -24,7 +24,7 @@ router.route('/join').post(
     function (req, res) {
       if(nowPlayerNum < 6) {
         if(nowPlayerNum == 0){
-          ptotal = req.body.totalPlayer
+          ptotal = Number(req.body.totalPlayer)
           dealer = new Dealer(ptotal)
           state = ptotal+1
         }
@@ -45,30 +45,29 @@ router.route('/join').post(
 )
 
 router.route('/table').get(
-    async function (req, res) {
+    function (req, res) {
         phand = dealer.players[req.session.user.id].hand
         pboard = dealer.table.board
-
-        if (state == ptotal+1) {
+        console.log(state)
+        if (state == (ptotal+1)) {
+            console.log(selectedCardNum.length)
+            console.log(selectedCardNum)
             if (selectedCardNum.length == ptotal) {
 
-                selectedCardNum = selectedCardNum.sort(item => dealer.players[item[0]].hand[item[1]])
-                console.log(selectedCardNum)
+                selectedCardNum = selectedCardNum.sort(item => dealer.players[item[0]].hand[item[1]].number)
                 for (let item of selectedCardNum){
                     selectedCard.push(dealer.players[item[0]].hand[item[1]])
                 }
-                console.log(selectedCard)
                 state = 1
             }
         }
         else {
+            console.log("state not 3333")
             let card = selectedCard[0]
             let chose = selectedCardNum[0]
-            console.log(chose)
             if (dealer.playerChooseCard(...chose)){
-                delay(10)
                 selectedCard.shift()
-                await function(){selectedCardNum.shift()}
+                selectedCardNum.shift()
                 state++
             }
         }
@@ -92,7 +91,8 @@ router.route('/choice').post(
 
         if (state != ptotal+1) res.redirect('/table')
 
-        let cardIndex = Number(req.body.selectedCardNum)
+        let cardIndex = Number(req.body.selectedCardNumber)
+        console.log(cardIndex)
         let choose = [true]
         selectedCardNum.forEach((item, index, arr) => {
             if (item[0] == req.session.user.id) {
@@ -104,7 +104,6 @@ router.route('/choice').post(
         } else {
             selectedCardNum[choose[1]] = [req.session.user.id, cardIndex]
         }
-        console.log(selectedCardNum)
         res.redirect('/table')
     }
 )
@@ -116,12 +115,14 @@ router.route('/select').post(
 
         let card = selectedCard[0]
         let chose = selectedCardNum[0]
-        if (dealer.playerChooseCard(...chose)){
+        if (!dealer.playerChooseCard(...chose)){
             dealer.playerChooseLine(...chose, card, req.body.listIndex)
         }
         selectedCard.shift()
         selectedCardNum.shift()
         state++
+
+        res.redirect('/table')
     }
 )
 

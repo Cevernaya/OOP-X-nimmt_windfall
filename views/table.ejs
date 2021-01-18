@@ -25,12 +25,14 @@
           <button class="boardBtn" type="submit">
             <section class="boardA board">
               <% for(let i = 0; i < 5; i++) { %>
-              <article class="boardBox">
-                <div class="card">
-                  <div class="cardPoint"><%= board[0][i].point %></div>
-                  <div class="cardNum"><%= board[0][i].number %></div>
-                </div>
-              </article>
+                <% if(board[0][i]) { %>
+                  <article class="boardBox">
+                    <div class="card">
+                      <div class="cardPoint"><%= board[0][i].point %></div>
+                      <div class="cardNum"><%= board[0][i].number %></div>
+                    </div>
+                  </article>
+                <% } %>
               <% } %>
             </section>
           </button>
@@ -40,12 +42,14 @@
           <button class="boardBtn" type="submit">
             <section class="boardB board">
               <% for(let i = 0; i < 5; i++) { %>
-              <article class="boardBox">
-                <div class="card">
-                  <div class="cardPoint"><%= board[1][i].point %></div>
-                  <div class="cardNum"><%= board[1][i].number %></div>
-                </div>
-              </article>
+                <% if(board[1][i]) { %>
+                  <article class="boardBox">
+                    <div class="card">
+                      <div class="cardPoint"><%= board[1][i].point %></div>
+                      <div class="cardNum"><%= board[1][i].number %></div>
+                    </div>
+                  </article>
+                <% } %>
               <% } %>
             </section>
           </button>
@@ -55,12 +59,14 @@
           <button class="boardBtn" type="submit">
             <section class="boardC board">
               <% for(let i = 0; i < 5; i++) { %>
-              <article class="boardBox">
-                <div class="card">
-                  <div class="cardPoint"><%= board[2][i].point %></div>
-                  <div class="cardNum"><%= board[2][i].number %></div>
-                </div>
-              </article>
+                <% if(board[2][i]) { %>
+                <article class="boardBox">
+                  <div class="card">
+                    <div class="cardPoint"><%= board[2][i].point %></div>
+                    <div class="cardNum"><%= board[2][i].number %></div>
+                  </div>
+                </article>
+                <% } %>
               <% } %>
             </section>
           </button>
@@ -70,12 +76,14 @@
           <button class="boardBtn" type="submit">
             <section class="boardD board">
               <% for(let i = 0; i < 5; i++) { %>
-              <article class="boardBox">
-                <div class="card">
-                  <div class="cardPoint"><%= board[3][i].point %></div>
-                  <div class="cardNum"><%= board[3][i].number %></div>
-                </div>
-              </article>
+                <% if(board[3][i]) { %>
+                  <article class="boardBox">
+                  <div class="card">
+                    <div class="cardPoint"><%= board[3][i].point %></div>
+                    <div class="cardNum"><%= board[3][i].number %></div>
+                  </div>
+                  </article>
+                <% } %>
               <% } %>
             </section>
           </button>
@@ -95,7 +103,7 @@
     <div class="hand">
       <% for (let i = 0; i < playerHand.length; i++){ %>
       <form action="/choice" method="POST">
-        <input class="hide" type="number" name="selectedCardNum" value="<%= i %>"/>
+        <input class="hide" type="number" name="selectedCardNumber" value="<%= i %>"/>
         <button class="cardBtn" type="submit">
           <div class="card">
             <div class="cardPoint"><%= playerHand[i].point %></div>
