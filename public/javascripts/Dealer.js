@@ -20,14 +20,13 @@ class Dealer {
 
     playerChooseCard(playerNum, cardNum){
         let card = this.players[playerNum].hand.splice(cardNum,1)
-        return [this.table.setCard(card), card]
+        return [this.table.setCard(card)]
     }
 
-    playerChooseLine(playerNum, card, boardNum){
-        let point = this.table.setCard(card, boardNum)
+    playerChooseLine(playerNum, cardNum, card, boardNum){
+        let point = this.table.takeCard(card, boardNum)
         this.players[playerNum].point -= point
     }
-
 }
 
 exports.Dealer = Dealer

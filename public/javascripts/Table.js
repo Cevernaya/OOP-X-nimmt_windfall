@@ -9,14 +9,15 @@ class Table {
     }
 
     setCard(card) {
-        let number = card[0].number
+        let number = card.number
         let gap = []
+        console.log(this.board)
         for (let i = 0; i < 4; i++) {
             gap.push(number - this.board[i].slice(-1)[0].number)
         }
         let num = gap.indexOf(Math.min(...gap.filter((value) => value>0)))
         if (Math.max(...gap) > 0) {
-            this.board[num].push(...card)
+            this.board[num].push(card)
             if (this.board[num].length > 6) return true
             else return false
         }
@@ -30,7 +31,7 @@ class Table {
         for (let i = 0; i < this.board[num].length; i++) {
             ret += this.board[num][i].point
         }
-        this.board[num] = card
+        this.board[num] = [card]
         return ret
     }
 }
