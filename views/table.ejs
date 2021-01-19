@@ -20,9 +20,9 @@
     </aside>
     <main class="main">
       <div class="mainWrap">
-        <form class="boardForm" action="/select" method="POST">
+        <form class="boardForm0" action="/select" method="POST">
           <input class="hide" type="number" name="listIndex" value="0"/>
-          <button class="boardBtn" type="submit">
+          <button class="boardBtn0" type="submit">
             <section class="boardA board">
               <% for(let i = 0; i < 5; i++) { %>
                 <% if(board[0][i]) { %>
@@ -37,9 +37,9 @@
             </section>
           </button>
         </form>
-        <form class="boardForm" action="/select" method="POST">
+        <form class="boardForm1" action="/select" method="POST">
           <input class="hide" type="number" name="listIndex" value="1"/>
-          <button class="boardBtn" type="submit">
+          <button class="boardBtn1" type="submit">
             <section class="boardB board">
               <% for(let i = 0; i < 5; i++) { %>
                 <% if(board[1][i]) { %>
@@ -54,9 +54,9 @@
             </section>
           </button>
         </form>
-        <form class="boardForm" action="/select" method="POST">
+        <form class="boardForm2" action="/select" method="POST">
           <input class="hide" type="number" name="listIndex" value="2"/>
-          <button class="boardBtn" type="submit">
+          <button class="boardBtn2" type="submit">
             <section class="boardC board">
               <% for(let i = 0; i < 5; i++) { %>
                 <% if(board[2][i]) { %>
@@ -71,9 +71,9 @@
             </section>
           </button>
         </form>
-        <form class="boardForm" action="/select" method="POST">
+        <form class="boardForm3" action="/select" method="POST">
           <input class="hide" type="number" name="listIndex" value="3"/>
-          <button class="boardBtn" type="submit">
+          <button class="boardBtn3" type="submit">
             <section class="boardD board">
               <% for(let i = 0; i < 5; i++) { %>
                 <% if(board[3][i]) { %>
@@ -102,9 +102,9 @@
     </aside>
     <div class="hand">
       <% for (let i = 0; i < playerHand.length; i++){ %>
-      <form class="cardForm" action="/choice" method="POST">
+      <form class="cardForm<%= i %>" action="/choice" method="POST">
         <input class="hide" type="text" name="selectedCardNumber" value="<%= i %>"/>
-        <button class="cardBtn" type="submit">
+        <button class="cardBtn<%= i %>" type="submit">
           <div class="card">
             <div class="cardPoint"><%= playerHand[i].point %></div>
             <div class="cardNum"><%= playerHand[i].number %></div>
@@ -119,25 +119,29 @@
   <script>
     $(function () {
       var socket = io()
-      $('.cardBtn').click(function(e) {
-        e.preventDefault()
-        socket.emit('refresh')
-        document.querySelector(".cardForm").submit()
-        setTimeout(function (){
+      for (let i = 0; i < playerHand.length; i++) {
+        $(`.cardBtn${i}`).click(function(e) {
+          e.preventDefault()
           socket.emit('refresh')
-        }, 500)
-      return false
-      })
-
-      $('.boardBtn').click(function(e) {
-        e.preventDefault()
-        socket.emit('refresh')
-        document.querySelector(".boardForm").submit()
-        setTimeout(function (){
-          socket.emit('refresh')
-        }, 500)
+          document.querySelector(`.cardForm${i}`).submit()
+          setTimeout(function (){
+            socket.emit('refresh')
+          }, 500)
         return false
-      })
+        })
+      }
+
+      for (let i = 0; i < 4; i++) {
+        $(`.boardBtn${i}`).click(function(e) {
+          e.preventDefault()
+          socket.emit('refresh')
+          document.querySelector(`.boardForm${i}`).submit()
+          setTimeout(function (){
+            socket.emit('refresh')
+          }, 500)
+          return false
+        })
+      }
 
       socket.on('refresh', function(){
       location.reload()
